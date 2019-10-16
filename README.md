@@ -1,33 +1,64 @@
-<!--
+[![CircleCI](https://circleci.com/gh/giantswarm/{APP-NAME}-app.svg?style=shield)](https://circleci.com/gh/giantswarm/{APP-NAME}-app)
 
-    TODO:
+# {APP-NAME} chart
 
-    - Add the project to the CircleCI:
-      https://circleci.com/setup-project/gh/giantswarm/REPOSITORY_NAME
+Giant Swarm offers a {APP-NAME} App which can be installed in workload clusters.
+Here we define the {APP-NAME} chart with its templates and default configuration.
 
-    - Import RELEASE_TOKEN variable from template repository for the builds:
-      https://circleci.com/gh/giantswarm/REPOSITORY_NAME/edit#env-vars
+**What is this app?**
+**Why did we add it?**
+**Who can use it?**
 
-    - Change the badge (with style=shield):
-      https://circleci.com/gh/giantswarm/REPOSITORY_NAME/edit#badges
-      If this is a private repository token with scope `status` will be needed.
+## Installing
 
-    - Change the top level header from `# template` to `# REPOSITORY_NAME` and
-      add appropriate description.
+There are 3 ways to install this app onto a workload cluster.
 
-    - If the repository is public consider adding godoc badge. This should be
-      the first badge separated with a single space.
-      [![GoDoc](https://godoc.org/github.com/giantswarm/REPOSITORY_NAME?status.svg)](http://godoc.org/github.com/giantswarm/REPOSITORY_NAME)
+1. [Using our web interface](https://docs.giantswarm.io/ui-api/web/app-platform/#installing-an-app)
+2. [Using our API](https://docs.giantswarm.io/api/#operation/createClusterAppV5)
+3. Directly creating the [App custom resource](https://docs.giantswarm.io/ui-api/management-api/crd/apps.application.giantswarm.io/) on the management cluster.
 
--->
-[![CircleCI](https://circleci.com/gh/giantswarm/template.svg?style=shield&circle-token=cbabd7d13186f190fca813db4f0c732b026f5f6c)](https://circleci.com/gh/giantswarm/template)
+## Configuring
 
-# template
+### values.yaml
+**This is an example of a values file you could upload using our web interface.**
+```
+# values.yaml
 
-This is a template repository containing some basic files every repository
-needs.
+```
 
-To use it just hit `Use this template` button or [this
-link][generate].
+### Sample App CR and ConfigMap for the management cluster
+If you have access to the Kubernetes API on the management cluster, you could create
+the App CR and ConfigMap directly.
 
-[generate]: https://github.com/giantswarm/template/generate
+Here is an example that would install the app to
+workload cluster `abc12`:
+
+```
+# appCR.yaml
+
+```
+
+```
+# user-values-configmap.yaml
+
+
+```
+
+See our [full reference page on how to configure applications](https://docs.giantswarm.io/app-platform/app-configuration/) for more details.
+
+## Compatibility
+
+This app has been tested to work with the following workload cluster release versions:
+
+*
+
+## Limitations
+
+Some apps have restrictions on how they can be deployed.
+Not following these limitations will most likely result in a broken deployment.
+
+*
+
+## Credit
+
+* {APP HELM REPOSITORY}

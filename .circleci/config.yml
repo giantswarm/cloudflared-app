@@ -1,17 +1,18 @@
-version: 2
-jobs:
-  build:
-    machine: true
-    steps:
-    - checkout
+version: 2.1
+orbs:
+  architect: giantswarm/architect@1.1.2
 
-    - run: |
-        wget -q $(curl -sS -H "Authorization: token $RELEASE_TOKEN" https://api.github.com/repos/giantswarm/architect/releases/latest | grep browser_download_url | head -n 1 | cut -d '"' -f 4)
-        chmod +x ./architect
-        ./architect version
-    - run: ./architect build
-    - deploy:
-        command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            ./architect deploy
-          fi
+workflows:
+  package-and-push-chart-on-tag:
+    jobs:
+      - architect/push-to-app-catalog:
+          context: "architect"
+          # executor: "app-build-suite" # uncomment this if you want automatic metadata generation
+          name: "package and push {APP-NAME} chart"
+          app_catalog: "giantswarm-playground-catalog"
+          app_catalog_test: "giantswarm-playground-test-catalog"
+          chart: "{APP-NAME}"
+          # Trigger job on git tag.
+          filters:
+            tags:
+              only: /^v.*/
