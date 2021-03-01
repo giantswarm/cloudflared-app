@@ -7,4 +7,4 @@ icon: https://raw.githubusercontent.com/giantswarm/cloudflared-app/cloudflare.pn
 name: cloudflared
 sources:
   - https://github.com/giantswarm/cloudflared-app
-version: 0.0.1
+version: "[[ .Version ]]"
