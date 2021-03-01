@@ -33,6 +33,7 @@ spec:
                 values:
                 - "{{ $dot.Chart.Name }}-{{ $dot.Release.Name }}"
             topologyKey: "kubernetes.io/hostname"
+      serviceAccountName: "{{ $dot.Chart.Name }}-{{ $dot.Release.Name }}"
       initContainers:
       - name: create-argo-tunnel
         image: {{ $Values.initImage.registry }}/{{ $Values.initImage.name }}:{{ $Values.initImage.tag }}

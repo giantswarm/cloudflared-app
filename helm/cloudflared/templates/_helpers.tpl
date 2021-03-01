@@ -1,5 +1,3 @@
-# TEMPLATE-APP: This is set as a reasonable default, feel free to change.
-
 {{/* vim: set filetype=mustache: */}}
 {{/*
 Expand the name of the chart.
