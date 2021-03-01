@@ -1,0 +1,13 @@
+accountEmail: "xxxx@xxxx.com"
+accountId: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+apiKey: "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+tunnelSecretBase64: "ZTYxMjNhZTstNWI4MC00Zjc0syLTks0xMzEtYzEyOWQs8yZDQ4NGY0Cg=="
+
+config:
+  no-tls-verify: false
+  loglevel: "info"
+  transport-loglevel: "info"
+  ingress:
+    - hostname: echo.xxxxxxxxxx.com
+      service: http://echo-echo-server.default.svc.cluster.local
+    - service: http_status:404
