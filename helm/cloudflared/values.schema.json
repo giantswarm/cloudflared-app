@@ -1,0 +1,67 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "properties": {
+        "accountEmail": {
+            "type": "string"
+        },
+        "accountId": {
+            "type": "string"
+        },
+        "apiKey": {
+            "type": "string"
+        },
+        "apiKeySecretName": {
+            "type": "string"
+        },
+        "config": {
+            "type": "object"
+        },
+        "image": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "pullPolicy": {
+                    "type": "string"
+                },
+                "registry": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                }
+            }
+        },
+        "initImage": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "pullPolicy": {
+                    "type": "string"
+                },
+                "registry": {
+                    "type": "string"
+                },
+                "tag": {
+                    "type": "string"
+                }
+            }
+        },
+        "namespace": {
+            "type": "string"
+        },
+        "serviceType": {
+            "type": "string"
+        },
+        "tunnelSecretBase64": {
+            "type": "string"
+        },
+        "tunnelSecretName": {
+            "type": "string"
+        }
+    }
+}
