@@ -1,0 +1,26 @@
+namespace: kube-system
+serviceType: managed
+
+initImage:
+  registry: quay.io
+  name: giantswarm/debug
+  tag: master
+  pullPolicy: IfNotPresent
+
+image:
+  registry: quay.io
+  name: giantswarm/cloudflared
+  tag: 2021.2.5
+  pullPolicy: IfNotPresent
+
+accountEmail: ""
+accountId: ""
+apiKey: ""
+apiKeySecretName: ""
+tunnelSecretBase64: ""
+tunnelSecretName: ""
+
+config:
+  no-tls-verify: false
+  loglevel: "info"
+  transport-loglevel: "info"

@@ -1,0 +1,93 @@
+{{- $dot := . }}
+{{- $Values := .Values }}
+{{- range until 2 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+    {{- include "labels.common" $dot | nindent 4 }}
+  name: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+      {{- include "labels.selector" $dot | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+        {{- include "labels.selector" $dot | nindent 8 }}
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                - "{{ $dot.Chart.Name }}-{{ $dot.Release.Name }}"
+            topologyKey: "kubernetes.io/hostname"
+      initContainers:
+      - name: create-argo-tunnel
+        image: {{ $Values.initImage.registry }}/{{ $Values.initImage.name }}:{{ $Values.initImage.tag }}
+        imagePullPolicy: {{ $Values.initImage.pullPolicy }}
+        {{- include "create-argo-tunnel-command" . | nindent 8 }}
+        env:
+          - name: TUNNEL_NAME
+            value: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+          {{- include "common.envs" $dot | nindent 10 }}
+        volumeMounts:
+          - name: credentials
+            mountPath: "/credentials"
+          - name: config
+            mountPath: "/etc/cloudflared"
+      containers:
+      - image: {{ $Values.image.registry }}/{{ $Values.image.name }}:{{ $Values.image.tag }}
+        name: cloudflared
+        imagePullPolicy: {{ $Values.image.pullPolicy }}
+        env:
+          - name: TUNNEL_METRICS
+            value: "0.0.0.0:42617"
+          {{- include "common.envs" $dot | nindent 10 }}
+        args:
+        - tunnel
+        - '--no-autoupdate'
+        - run
+        - cloudflared-{{ $dot.Release.Name }}-{{ . }}
+        resources: {}
+        volumeMounts:
+          - name: config
+            mountPath: "/etc/cloudflared"
+          - name: credentials
+            mountPath: "/credentials"
+        livenessProbe:
+          httpGet:
+            path: /healthcheck
+            port: 42617
+            scheme: HTTP
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 42617
+            scheme: HTTP
+        startupProbe:
+          httpGet:
+            path: /ready
+            port: 42617
+            scheme: HTTP
+          failureThreshold: 60
+          periodSeconds: 10
+      volumes:
+        - name: config
+          configMap:
+            name: "cloudflared-{{ $.Release.Name }}"
+        - name: credentials
+          emptyDir: {}
+...
+{{- end }}
