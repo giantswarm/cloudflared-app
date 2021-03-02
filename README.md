@@ -40,10 +40,10 @@ In order to use this you will need to ensure you have the following:
 - Email address to login to Cloudflare API
 - Cloudflare Account ID
 
-![Cloudflare Account ID](accountid.png)
+![Cloudflare Account ID](https://raw.githubusercontent.com/giantswarm/cloudflared-app/main/accountid.png)
 - Cloudflare API token with `Account:Argo Tunnel:Edit` capability
 
-![Cloudflare API Token](apitoken.png)
+![Cloudflare API Token](https://raw.githubusercontent.com/giantswarm/cloudflared-app/main/apitoken.png)
 
 #### Optional
 The Tunnel requires a secret to launch, if one is not supplied the App can
