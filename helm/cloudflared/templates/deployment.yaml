@@ -1,26 +1,32 @@
 {{- $dot := . }}
 {{- $Values := .Values }}
-{{- range until 2 }}
+{{- range default (until 2) .Values.useExistingTunnels.tunnelIDs }}
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app.kubernetes.io/name: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+    app.kubernetes.io/name: {{ template "name" (dict "dot" $dot "thisIndex" . ) }}
+    {{- if $Values.useExistingTunnels.enabled }}
+    app.kubernetes.io/tunnelID: {{ . }}
+    {{- end }}
     {{- include "labels.common" $dot | nindent 4 }}
-  name: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+  name: {{ template "name" (dict "dot" $dot "thisIndex" . ) }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+      app.kubernetes.io/name: {{ template "name" (dict "dot" $dot "thisIndex" . ) }}
       {{- include "labels.selector" $dot | nindent 6 }}
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app.kubernetes.io/name: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
+        app.kubernetes.io/name: {{ template "name" (dict "dot" $dot "thisIndex" . ) }}
+        {{- if $Values.useExistingTunnels.enabled }}
+        app.kubernetes.io/tunnelID: {{ . }}
+        {{- end }}
         {{- include "labels.selector" $dot | nindent 8 }}
     spec:
       affinity:
@@ -34,6 +40,7 @@ spec:
                 - "{{ $dot.Chart.Name }}-{{ $dot.Release.Name }}"
             topologyKey: "kubernetes.io/hostname"
       serviceAccountName: "{{ $dot.Chart.Name }}-{{ $dot.Release.Name }}"
+      {{- if not $Values.useExistingTunnels.enabled }}
       initContainers:
       - name: create-argo-tunnel
         image: {{ $Values.initImage.registry }}/{{ $Values.initImage.name }}:{{ $Values.initImage.tag }}
@@ -42,12 +49,13 @@ spec:
         env:
           - name: TUNNEL_NAME
             value: "cloudflared-{{ $dot.Release.Name }}-{{ . }}"
-          {{- include "common.envs" $dot | nindent 10 }}
+          {{- include "final.envs" (dict "dot" $dot "thisIndex" . ) | nindent 10 }}
         volumeMounts:
           - name: credentials
             mountPath: "/credentials"
           - name: config
             mountPath: "/etc/cloudflared"
+      {{- end }}
       containers:
       - image: {{ $Values.image.registry }}/{{ $Values.image.name }}:{{ $Values.image.tag }}
         name: cloudflared
@@ -55,12 +63,16 @@ spec:
         env:
           - name: TUNNEL_METRICS
             value: "0.0.0.0:42617"
-          {{- include "common.envs" $dot | nindent 10 }}
+          {{- include "final.envs" (dict "dot" $dot "thisIndex" . ) | nindent 10 }}
         args:
         - tunnel
         - '--no-autoupdate'
         - run
+        {{- if $Values.useExistingTunnels.enabled }}
+        - {{ . }}
+        {{- else }}
         - cloudflared-{{ $dot.Release.Name }}-{{ . }}
+        {{- end }}
         resources: {}
         volumeMounts:
           - name: config
@@ -89,6 +101,11 @@ spec:
           configMap:
             name: "cloudflared-{{ $.Release.Name }}"
         - name: credentials
+          {{- if $Values.useExistingTunnels.enabled }}
+          secret:
+            secretName: "{{ $Values.useExistingTunnels.credentialsSecretName }}"
+          {{- else }}
           emptyDir: {}
+          {{- end }}
 ...
 {{- end }}

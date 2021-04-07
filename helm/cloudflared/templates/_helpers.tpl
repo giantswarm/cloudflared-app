@@ -3,7 +3,11 @@
 Expand the name of the chart.
 */}}
 {{- define "name" -}}
-{{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
+{{- if .dot.Values.useExistingTunnels.enabled }}
+{{- printf "cloudflared-%s" .thisIndex | trunc 63 | trimSuffix "-" -}}
+{{- else }}
+{{- print "cloudflared-" .dot.Release.Name "-" .thisIndex | trunc 63 | trimSuffix "-" | quote -}}
+{{- end }}
 {{- end -}}
 
 {{/*
@@ -31,11 +35,9 @@ app.kubernetes.io/instance: "{{ .Chart.Name }}-{{ .Release.Name }}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end -}}
 
-{{- define "common.envs" -}}
+{{- define "create_tunnel.envs" }}
 - name: TUNNEL_CRED_FILE
   value: "/credentials/credentials.json"
-- name: CONFIG_FILE
-  value: "/etc/cloudflared/config.yml"
 - name: TUNNEL_SECRET_BASE64
   valueFrom:
     secretKeyRef:
@@ -64,4 +66,15 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
       name: cloudflared-{{ $.Release.Name }}-apikey
       {{- end }}
       key: apiKey
+{{- end -}}
+
+{{- define "final.envs" -}}
+- name: CONFIG_FILE
+  value: "/etc/cloudflared/config.yml"
+{{- if .dot.Values.useExistingTunnels.enabled }}
+- name: TUNNEL_CRED_FILE
+  value: "/credentials/{{ .thisIndex }}.json"
+{{- else }}
+{{- template "create_tunnel.envs" .dot }}
+{{- end }}
 {{- end -}}

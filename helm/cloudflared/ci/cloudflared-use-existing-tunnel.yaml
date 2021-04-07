@@ -1,0 +1,15 @@
+useExistingTunnels:
+  enabled: true
+  credentialsSecretName: my-tunnel-credentials
+  tunnelIDs:
+    - "f8c06a8a-1880-4e6e-8502-deb8f1d1253b"
+    - "a6392a8a-4dfa-4df6-8eff-e370097f0726"
+
+config:
+  no-tls-verify: false
+  loglevel: "info"
+  transport-loglevel: "info"
+  ingress:
+    - hostname: echo.xxxxxxxxxx.com
+      service: http://echo-echo-server.default.svc.cluster.local
+    - service: http_status:404
