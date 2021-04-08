@@ -15,7 +15,18 @@
             "type": "string"
         },
         "config": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "loglevel": {
+                    "type": "string"
+                },
+                "no-tls-verify": {
+                    "type": "boolean"
+                },
+                "transport-loglevel": {
+                    "type": "string"
+                }
+            }
         },
         "image": {
             "type": "object",
@@ -62,6 +73,20 @@
         },
         "tunnelSecretName": {
             "type": "string"
+        },
+        "useExistingTunnels": {
+            "type": "object",
+            "properties": {
+                "credentialsSecretName": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "tunnelIDs": {
+                    "type": "array"
+                }
+            }
         }
     }
 }
