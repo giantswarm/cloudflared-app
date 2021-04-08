@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Support the use of existing (pre-created) Argo Tunnels
-- Pre delete hook that deletes the tunnels *only* for App managedl tunnels (not pre-created tunnels)
+- Pre delete hook that deletes the tunnels *only* for App managed tunnels (not pre-created tunnels)
 
 ## v0.0.5
 
