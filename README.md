@@ -67,6 +67,11 @@ encoded.
 
 You can later supply the Kubernetes secret name.
 
+####⚠️ *WARNING*
+When using Argo tunnel managed by the app, the tunnel will be deleted upon
+removal of the app. A pre delete hook will be executed that cleans the tunnel
+connection and then deletes the tunnel.
+
 ### Use existing Tunnels
 Create Argo Tunnel(s) from an existing device (It is recommended to at least create two tunnels for resilience). Once the tunnels are created,
 the credentials JSON file(s) can be found in `~/.cloudflared/`. These need to be saved in a Kubernetes secret:
