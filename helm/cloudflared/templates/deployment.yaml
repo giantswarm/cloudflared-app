@@ -40,6 +40,9 @@ spec:
                 - "{{ $dot.Chart.Name }}-{{ $dot.Release.Name }}"
             topologyKey: "kubernetes.io/hostname"
       serviceAccountName: "{{ $dot.Chart.Name }}-{{ $dot.Release.Name }}"
+      securityContext:
+        runAsUser: 1000
+        readOnlyRootFilesystem: true
       {{- if not $Values.useExistingTunnels.enabled }}
       initContainers:
       - name: create-argo-tunnel
@@ -82,6 +85,8 @@ spec:
         {{- else }}
         - cloudflared-{{ $dot.Release.Name }}-{{ . }}
         {{- end }}
+        securityContext:
+          readOnlyRootFilesystem: true
         volumeMounts:
           - name: config
             mountPath: "/etc/cloudflared"
@@ -104,9 +109,6 @@ spec:
             scheme: HTTP
           failureThreshold: 60
           periodSeconds: 10
-      securityContext:
-        runAsUser: 1000
-        readOnlyRootFilesystem: true
       volumes:
         - name: config
           configMap:
