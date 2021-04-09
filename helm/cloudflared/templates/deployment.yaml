@@ -68,7 +68,7 @@ spec:
         name: cloudflared
         imagePullPolicy: {{ $Values.image.pullPolicy }}
         resources:
-          {{ toYaml $Values.resources | indent 10 }}
+          {{ toYaml $Values.resources | nindent 10 }}
         env:
           - name: TUNNEL_METRICS
             value: "0.0.0.0:42617"
