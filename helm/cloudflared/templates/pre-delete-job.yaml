@@ -20,13 +20,13 @@ spec:
     spec:
       serviceAccountName: "{{ .Chart.Name }}-{{ .Release.Name }}"
       restartPolicy: Never
-      securityContext:
-        runAsUser: 1000
-        readOnlyRootFilesystem: true
       containers:
       - name: clean-delete-tunnel
         image: {{ .Values.initImage.registry }}/{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}
         imagePullPolicy: {{ .Values.initImage.pullPolicy }}
+        securityContext:
+          runAsUser: 1000
+          readOnlyRootFilesystem: true
         resources:
           requests:
             memory: "100Mi"

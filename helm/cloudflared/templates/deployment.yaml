@@ -68,7 +68,7 @@ spec:
         name: cloudflared
         imagePullPolicy: {{ $Values.image.pullPolicy }}
         resources:
-          {{ toYaml $Values.resources | nindent 10 }}
+          {{- toYaml $Values.resources | nindent 10 }}
         env:
           - name: TUNNEL_METRICS
             value: "0.0.0.0:42617"
@@ -82,7 +82,6 @@ spec:
         {{- else }}
         - cloudflared-{{ $dot.Release.Name }}-{{ . }}
         {{- end }}
-        resources: {}
         volumeMounts:
           - name: config
             mountPath: "/etc/cloudflared"
