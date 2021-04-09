@@ -45,6 +45,13 @@ spec:
       - name: create-argo-tunnel
         image: {{ $Values.initImage.registry }}/{{ $Values.initImage.name }}:{{ $Values.initImage.tag }}
         imagePullPolicy: {{ $Values.initImage.pullPolicy }}
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "100Mi"
+            cpu: "100m"
         {{- include "create-argo-tunnel-command" . | nindent 8 }}
         env:
           - name: TUNNEL_NAME
@@ -60,6 +67,8 @@ spec:
       - image: {{ $Values.image.registry }}/{{ $Values.image.name }}:{{ $Values.image.tag }}
         name: cloudflared
         imagePullPolicy: {{ $Values.image.pullPolicy }}
+        resources:
+          {{ toYaml $Values.resources | indent 10 }}
         env:
           - name: TUNNEL_METRICS
             value: "0.0.0.0:42617"
@@ -96,6 +105,9 @@ spec:
             scheme: HTTP
           failureThreshold: 60
           periodSeconds: 10
+      securityContext:
+        runAsUser: 1000
+        readOnlyRootFilesystem: true
       volumes:
         - name: config
           configMap:

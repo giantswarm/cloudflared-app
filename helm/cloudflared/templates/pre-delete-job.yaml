@@ -20,10 +20,20 @@ spec:
     spec:
       serviceAccountName: "{{ .Chart.Name }}-{{ .Release.Name }}"
       restartPolicy: Never
+      securityContext:
+        runAsUser: 1000
+        readOnlyRootFilesystem: true
       containers:
       - name: clean-delete-tunnel
         image: {{ .Values.initImage.registry }}/{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}
         imagePullPolicy: {{ .Values.initImage.pullPolicy }}
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "100Mi"
+            cpu: "100m"
         {{- include "clean+delete-argo-tunnel-command" . | nindent 8 }}
         env:
           {{- include "create_tunnel.envs" . | nindent 10 }}
