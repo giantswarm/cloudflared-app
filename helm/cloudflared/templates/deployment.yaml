@@ -88,6 +88,8 @@ spec:
         securityContext:
           readOnlyRootFilesystem: true
         volumeMounts:
+          - name: tmp
+            mountPath: "/tmp"
           - name: config
             mountPath: "/etc/cloudflared"
           - name: credentials
@@ -110,6 +112,8 @@ spec:
           failureThreshold: 60
           periodSeconds: 10
       volumes:
+        - name: tmp
+          emptyDir: {}
         - name: config
           configMap:
             name: "cloudflared-{{ $.Release.Name }}"

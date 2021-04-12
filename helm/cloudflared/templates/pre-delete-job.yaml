@@ -37,5 +37,11 @@ spec:
         {{- include "clean+delete-argo-tunnel-command" . | nindent 8 }}
         env:
           {{- include "create_tunnel.envs" . | nindent 10 }}
+        volumeMounts:
+          - name: tmp
+            mountPath: "/tmp"
+      volumes:
+        - name: tmp
+          emptyDir: {}
 ...
 {{- end }}
