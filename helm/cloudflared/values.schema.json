@@ -15,7 +15,18 @@
             "type": "string"
         },
         "config": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "loglevel": {
+                    "type": "string"
+                },
+                "no-tls-verify": {
+                    "type": "boolean"
+                },
+                "transport-loglevel": {
+                    "type": "string"
+                }
+            }
         },
         "image": {
             "type": "object",
@@ -54,6 +65,33 @@
         "namespace": {
             "type": "string"
         },
+        "resources": {
+            "type": "object",
+            "properties": {
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string"
+                        },
+                        "memory": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "requests": {
+                    "type": "object",
+                    "properties": {
+                        "cpu": {
+                            "type": "string"
+                        },
+                        "memory": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "serviceType": {
             "type": "string"
         },
@@ -62,6 +100,20 @@
         },
         "tunnelSecretName": {
             "type": "string"
+        },
+        "useExistingTunnels": {
+            "type": "object",
+            "properties": {
+                "credentialsSecretName": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "tunnelIDs": {
+                    "type": "array"
+                }
+            }
         }
     }
 }

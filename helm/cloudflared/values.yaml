@@ -20,7 +20,20 @@ apiKeySecretName: ""
 tunnelSecretBase64: ""
 tunnelSecretName: ""
 
+useExistingTunnels:
+  enabled: false
+  credentialsSecretName: ""
+  tunnelIDs: []
+
 config:
   no-tls-verify: false
   loglevel: "info"
   transport-loglevel: "info"
+
+resources:
+  requests:
+    memory: "100Mi"
+    cpu: "100m"
+  limits:
+    memory: "100Mi"
+    cpu: "100m"

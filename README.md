@@ -33,8 +33,13 @@ There are 3 ways to install this app onto a workload cluster.
 (Note: It is possible to use the chart in this repository directly)
 
 ## Configuring
+This app can be used in 2 ways:
 
-### Prerequisites
+- Either using existing tunnels and supplying credentials file(s) - This is the recommended Cloudflare way of running Argo Tunnels
+- Use the App to create and mange the Argo tunnels for you
+
+
+### App Managed Argo Tunnels
 In order to use this you will need to ensure you have the following:
 
 - Email address to login to Cloudflare API
@@ -62,29 +67,49 @@ encoded.
 
 You can later supply the Kubernetes secret name.
 
+####⚠️ *WARNING*
+When using Argo tunnel managed by the app, the tunnel will be deleted upon
+removal of the app. A pre delete hook will be executed that cleans the tunnel
+connection and then deletes the tunnel.
+
+### Use existing Tunnels
+Create Argo Tunnel(s) from an existing device (It is recommended to at least create two tunnels for resilience). Once the tunnels are created,
+the credentials JSON file(s) can be found in `~/.cloudflared/`. These need to be saved in a Kubernetes secret:
+```
+kubectl create secret -n clouflared-namespace cloudflared-credentials --from-file=~/.cloudflared/<TUNNEL_ID-1>.json --from-file=~/.cloudflared/<TUNNEL_ID-2>.json --from-file=...
+```
+
+Then it is required to set `useExistingTunnels.enabled` to true and complete the keys within `useExistingTunnels` (An example is presented below).
+
 ### values.yaml
-|Value                  |Description|Default|
-|-----------------------|-----------|-------|
-|`namespace`            | Namespace in which to launch the App        | `kube-system` |
-|`serviceType`          | Giant Swarm service definition              | `managed` |
-|`initImage.registry`   | Registry used for the init container image  | `quay.io` |
-|`initImage.name`       | Image name used for the init container      | `giantswarm/debug` |
-|`initImage.tag`        | Tag of init container image                 | `master` |
-|`initImage.pullPolicy` | Init container image Pull Policy            | `IfNotPresent` |
-|`image.registry`       | Registry used for cloudflared               | `quay.io` |
-|`image.name`           | Image name for cloudflared                  | `giantswarm/cloudflared` |
-|`image.tag`            | Tag used for cloudflared image              | `2021.2.5` |
-|`image.pullPolicy`     | Pull policy for cloudflared image           | `IfNotPresent` |
-|`accountEmail`         | Account Email to use for the API (required) | `""` |
-|`accountId`            | Account ID (see above, required)            | `""` |
-|`apiKey`               | API key used for the API (see above, required or `apiKeySecretName` needs to be set) | `""` |
-|`apiKeySecretName`     | Name of existing secret that containers the API Key, the API key needs to be stored in a key in the secret called `apiKey` (required or `apiKey` needs to be set) | `""` |
-|`tunnelSecretBase64`   | Base64 encoded Tunnel Secret (see above, required or `tunnelSecretName` needs to be set | `""` |
-|`tunnelSecretName`     | Name of existing secret container Tunnel Secret, the tunnel secret needs to be stored in a key in the secret called `tunnelSecret` (required or `tunnelSecretBase64` needs to be set) | `""` |
-|`config`               | Config file used for cloudflared. See [online documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config) | see `values.yaml` |
+|Value                        |Description|Default|
+|-----------------------------|-----------|-------|
+|`namespace`                  | Namespace in which to launch the App        | `kube-system` |
+|`serviceType`                | Giant Swarm service definition              | `managed` |
+|`initImage.registry`         | Registry used for the init container image  | `quay.io` |
+|`initImage.name`             | Image name used for the init container      | `giantswarm/debug` |
+|`initImage.tag`              | Tag of init container image                 | `master` |
+|`initImage.pullPolicy`       | Init container image Pull Policy            | `IfNotPresent` |
+|`image.registry`             | Registry used for cloudflared               | `quay.io` |
+|`image.name`                 | Image name for cloudflared                  | `giantswarm/cloudflared` |
+|`image.tag`                  | Tag used for cloudflared image              | `2021.2.5` |
+|`image.pullPolicy`           | Pull policy for cloudflared image           | `IfNotPresent` |
+|`accountEmail`               | Account Email to use for the API (required) | `""` |
+|`accountId`                  | Account ID (see above, required)            | `""` |
+|`apiKey`                     | API key used for the API (see above, required or `apiKeySecretName` needs to be set) | `""` |
+|`apiKeySecretName`           | Name of existing secret that containers the API Key, the API key needs to be stored in a key in the secret called `apiKey` (required or `apiKey` needs to be set) | `""` |
+|`tunnelSecretBase64`         | Base64 encoded Tunnel Secret (see above, required or `tunnelSecretName` needs to be set | `""` |
+|`tunnelSecretName`           | Name of existing secret container Tunnel Secret, the tunnel secret needs to be stored in a key in the secret called `tunnelSecret` (required or `tunnelSecretBase64` needs to be set) | `""` |
+|`config`                     | Config file used for cloudflared. See [online documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config) | see `values.yaml` |
+|`useExistingTunnels.enabled` | Whether to use an existing Tunnel           | `false` |
+|`useExistingTunnels.credentialsSecretName` | Secret name that contains the credential files | `""` |
+|`useExistingTunnels.tunnelIDs` | A list of tunnel IDs that you wish to connect to, these must have associated credential files in `useExistingTunnels.credentialsSecretName` | `[]` |
 
 
-**This is an example of a values file you could upload using our web interface.**
+### Examples
+
+#### App Managed Tunnels
+
 ```
 # values.yaml
 accountEmail: "xxxx@xxxxx.com"
@@ -101,6 +126,25 @@ config:
       service: http://echo-echo-server.default.svc.cluster.local
     - service: http_status:404
 
+```
+
+#### Use existing Tunnels
+```
+useExistingTunnels:
+  enabled: true
+  credentialsSecretName: my-tunnel-credentials
+  tunnelIDs:
+    - "f8c06a8a-1880-4e6e-8502-deb8f1d1253b"
+    - "a6392a8a-4dfa-4df6-8eff-e370097f0726"
+
+config:
+  no-tls-verify: false
+  loglevel: "info"
+  transport-loglevel: "info"
+  ingress:
+    - hostname: echo.xxxxxxxxxx.com
+      service: http://echo-echo-server.default.svc.cluster.local
+    - service: http_status:404
 ```
 
 ## Compatibility
