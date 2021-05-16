@@ -16,7 +16,7 @@ spec:
       labels:
         {{- include "cloudflared.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: "{{ .Chart.Name }}-{{ .Release.Name }}"
+      serviceAccountName: {{ template "cloudflared.serviceAccountName" . }}
       restartPolicy: Never
       containers:
       - name: clean-delete-tunnel
