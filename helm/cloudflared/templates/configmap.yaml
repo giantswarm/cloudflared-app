@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "cloudflared-{{ .Release.Name }}"
+  name: {{ template "cloudflared.fullname" . }}
 data:
   config.yml: |-
     {{- with .Values.config }}
