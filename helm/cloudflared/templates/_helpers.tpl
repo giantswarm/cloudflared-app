@@ -68,18 +68,18 @@ Create the name of the service account to use
       {{- if $.Values.tunnelSecretName }}
       name: {{ $.Values.tunnelSecretName }}
       {{- else }}
-      name: cloudflared-{{ $.Release.Name }}-tunnelsecret
+      name: {{ template "cloudflared.fullname" . }}-tunnelsecret
       {{- end }}
       key: tunnelSecret
 - name: ACCOUNT_EMAIL
   valueFrom:
     secretKeyRef:
-      name: cloudflared-{{ $.Release.Name }}
+      name:  {{ template "cloudflared.fullname" . }}
       key: accountEmail
 - name: ACCOUNT_ID
   valueFrom:
     secretKeyRef:
-      name: cloudflared-{{ $.Release.Name }}
+      name:  {{ template "cloudflared.fullname" . }}
       key: accountId
 - name: API_KEY
   valueFrom:
@@ -87,7 +87,7 @@ Create the name of the service account to use
       {{- if $.Values.apiKeySecretName }}
       name: {{ $.Values.apiKeySecretName }}
       {{- else }}
-      name: cloudflared-{{ $.Release.Name }}-apikey
+      name: {{ template "cloudflared.fullname" . }}-apikey
       {{- end }}
       key: apiKey
 {{- end -}}
