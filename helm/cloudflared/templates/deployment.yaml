@@ -37,7 +37,6 @@ spec:
       serviceAccountName: {{ template "cloudflared.serviceAccountName" . }}
       securityContext:
         runAsUser: 1000
-        readOnlyRootFilesystem: true
       {{- if not .Values.useExistingTunnels.enabled }}
       initContainers:
       - name: create-argo-tunnel
