@@ -86,6 +86,7 @@ Then it is required to set `useExistingTunnels.enabled` to true and complete the
 |-----------------------------|-----------|-------|
 |`namespace`                  | Namespace in which to launch the App        | `kube-system` |
 |`serviceType`                | Giant Swarm service definition              | `managed` |
+|`replicas`                   | Number of replicas to use for a deployment  | `2`       |
 |`initImage.registry`         | Registry used for the init container image  | `quay.io` |
 |`initImage.name`             | Image name used for the init container      | `giantswarm/debug` |
 |`initImage.tag`              | Tag of init container image                 | `master` |
@@ -103,7 +104,6 @@ Then it is required to set `useExistingTunnels.enabled` to true and complete the
 |`config`                     | Config file used for cloudflared. See [online documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config) | see `values.yaml` |
 |`useExistingTunnels.enabled` | Whether to use an existing Tunnel           | `false` |
 |`useExistingTunnels.credentialsSecretName` | Secret name that contains the credential files | `""` |
-|`useExistingTunnels.tunnelIDs` | A list of tunnel IDs that you wish to connect to, these must have associated credential files in `useExistingTunnels.credentialsSecretName` | `[]` |
 
 
 ### Examples
