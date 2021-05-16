@@ -1,5 +1,5 @@
 apiVersion: v1
-appVersion: 2021.5.2
+appVersion: 2021.5.6
 description: Create Argo Tunnels and configure ingress routes
 engine: gotpl
 home: https://github.com/giantswarm/cloudflared-app

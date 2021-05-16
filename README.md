@@ -93,7 +93,7 @@ Then it is required to set `useExistingTunnels.enabled` to true and complete the
 |`initImage.pullPolicy`       | Init container image Pull Policy            | `IfNotPresent` |
 |`image.registry`             | Registry used for cloudflared               | `quay.io` |
 |`image.name`                 | Image name for cloudflared                  | `giantswarm/cloudflared` |
-|`image.tag`                  | Tag used for cloudflared image              | `2021.2.5` |
+|`image.tag`                  | Tag used for cloudflared image              | `2021.5.6` |
 |`image.pullPolicy`           | Pull policy for cloudflared image           | `IfNotPresent` |
 |`accountEmail`               | Account Email to use for the API (required) | `""` |
 |`accountId`                  | Account ID (see above, required)            | `""` |

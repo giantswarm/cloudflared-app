@@ -12,7 +12,7 @@ initImage:
 image:
   registry: quay.io
   name: giantswarm/cloudflared
-  tag: 2021.5.2
+  tag: 2021.5.6
   pullPolicy: IfNotPresent
 
 accountEmail: ""
