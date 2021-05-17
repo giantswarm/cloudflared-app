@@ -6,6 +6,7 @@ name: Create Release PR
 on:
   push:
     branches:
+      - 'main#release#v*.*.*'
       - 'master#release#v*.*.*'
       - 'legacy#release#v*.*.*'
       - 'release-v*.*.x#release#v*.*.*'
