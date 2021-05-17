@@ -46,9 +46,6 @@ command:
         ${API_ENDPOINT}/${TUNNEL_ID}
     }
 
-    {{ range until 2 }}
-    TUNNEL_NAME={{ print "cloudflared-" $.Release.Name "-" . | trunc 63 | squote }}
     set_tunnel_id
     clean_delete_tunnel
-    {{- end }}
 {{- end -}}

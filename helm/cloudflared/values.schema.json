@@ -65,6 +65,9 @@
         "namespace": {
             "type": "string"
         },
+        "replicas": {
+            "type": "integer"
+        },
         "resources": {
             "type": "object",
             "properties": {
@@ -109,9 +112,6 @@
                 },
                 "enabled": {
                     "type": "boolean"
-                },
-                "tunnelIDs": {
-                    "type": "array"
                 }
             }
         }

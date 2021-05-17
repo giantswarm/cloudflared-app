@@ -1,6 +1,8 @@
 namespace: kube-system
 serviceType: managed
 
+replicas: 2
+
 initImage:
   registry: quay.io
   name: giantswarm/debug
@@ -10,7 +12,7 @@ initImage:
 image:
   registry: quay.io
   name: giantswarm/cloudflared
-  tag: 2021.2.5
+  tag: 2021.5.6
   pullPolicy: IfNotPresent
 
 accountEmail: ""
@@ -23,7 +25,6 @@ tunnelSecretName: ""
 useExistingTunnels:
   enabled: false
   credentialsSecretName: ""
-  tunnelIDs: []
 
 config:
   no-tls-verify: false

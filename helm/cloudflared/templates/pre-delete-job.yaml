@@ -3,10 +3,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: "cloudflared-{{ .Release.Name }}-helm-pre-delete"
+  name: "{{ template "cloudflared.fullname" . }}-helm-pre-delete"
   labels:
-    app.kubernetes.io/name: "cloudflared-{{ .Release.Name }}"
-    {{- include "labels.common" . | nindent 4 }}
+    {{- include "cloudflared.labels" . | nindent 4 }}
   annotations:
     "helm.sh/hook": pre-delete
     "helm.sh/hook-weight": "-1"
@@ -15,10 +14,9 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: "cloudflared-{{ .Release.Name }}"
-        {{- include "labels.selector" . | nindent 8 }}
+        {{- include "cloudflared.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: "{{ .Chart.Name }}-{{ .Release.Name }}"
+      serviceAccountName: {{ template "cloudflared.serviceAccountName" . }}
       restartPolicy: Never
       containers:
       - name: clean-delete-tunnel
