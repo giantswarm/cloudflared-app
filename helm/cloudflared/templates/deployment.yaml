@@ -75,7 +75,11 @@ spec:
         - tunnel
         - '--no-autoupdate'
         - run
-        - $TUNNEL_NAME
+        {{- if .Values.useExistingTunnels.enabled }}
+        - {{ .Values.useExistingTunnels.tunnel }}
+        {{- else }}
+        - {{ template "cloudflared.fullname" . }}
+        {{- end }}
         securityContext:
           readOnlyRootFilesystem: true
         volumeMounts:
