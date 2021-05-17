@@ -1,9 +1,7 @@
 useExistingTunnels:
   enabled: true
   credentialsSecretName: my-tunnel-credentials
-  tunnelIDs:
-    - "f8c06a8a-1880-4e6e-8502-deb8f1d1253b"
-    - "a6392a8a-4dfa-4df6-8eff-e370097f0726"
+  tunnel: "f8c06a8a-1880-4e6e-8502-deb8f1d1253b"
 
 config:
   no-tls-verify: false

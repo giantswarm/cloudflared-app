@@ -60,8 +60,6 @@ Create the name of the service account to use
 {{- end }}
 
 {{- define "create_tunnel.envs" -}}
-- name: TUNNEL_NAME
-  value: {{ template "cloudflared.fullname" . }}
 - name: TUNNEL_SECRET_BASE64
   valueFrom:
     secretKeyRef:
@@ -93,6 +91,12 @@ Create the name of the service account to use
 {{- end -}}
 
 {{- define "envs" -}}
+- name: TUNNEL_NAME
+{{- if .Values.useExistingTunnels.enabled }}
+  value: {{ .Values.useExistingTunnels.tunnel }}
+{{- else }}
+  value: {{ template "cloudflared.fullname" . }}
+{{- end }}
 - name: CONFIG_FILE
   value: "/etc/cloudflared/config.yml"
 - name: TUNNEL_CRED_FILE

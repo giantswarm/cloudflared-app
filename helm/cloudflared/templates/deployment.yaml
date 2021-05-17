@@ -75,6 +75,7 @@ spec:
         - tunnel
         - '--no-autoupdate'
         - run
+        - $TUNNEL_NAME
         securityContext:
           readOnlyRootFilesystem: true
         volumeMounts:
