@@ -36,7 +36,9 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       serviceAccountName: {{ template "cloudflared.serviceAccountName" . }}
       securityContext:
-        runAsUser: 1000
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65534
       {{- if not .Values.useExistingTunnels.enabled }}
       initContainers:
       - name: create-argo-tunnel
