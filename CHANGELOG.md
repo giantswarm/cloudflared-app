@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Bump the version and use `2021.6.0`
+
+### Fix
+
+- Set security context correctly so distroless image can start
+- Ensure that a Tunnel Name or ID is set when running the tunnel
+- Correct reference to replicas in deployment YAML
+
 ## [0.1.0] - 2021-05-17
 
 ### Changed

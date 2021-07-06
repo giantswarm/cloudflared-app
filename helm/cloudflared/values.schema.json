@@ -112,6 +112,9 @@
                 },
                 "enabled": {
                     "type": "boolean"
+                },
+                "tunnel": {
+                    "type": "string"
                 }
             }
         }

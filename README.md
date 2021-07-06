@@ -104,6 +104,7 @@ Then it is required to set `useExistingTunnels.enabled` to true and complete the
 |`config`                     | Config file used for cloudflared. See [online documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config) | see `values.yaml` |
 |`useExistingTunnels.enabled` | Whether to use an existing Tunnel           | `false` |
 |`useExistingTunnels.credentialsSecretName` | Secret name that contains the credential files | `""` |
+|`useExistingTunnels.tunnel`  | Either the tunnel name or tunnel ID as found in credentials file| `""` |
 
 
 ### Examples

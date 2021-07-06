@@ -6,7 +6,7 @@ metadata:
     {{- include "cloudflared.labels" . | nindent 4 }}
   name: {{ template "cloudflared.fullname" . }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       {{- include "cloudflared.selectorLabels" . | nindent 6 }}
@@ -36,7 +36,9 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       serviceAccountName: {{ template "cloudflared.serviceAccountName" . }}
       securityContext:
-        runAsUser: 1000
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65534
       {{- if not .Values.useExistingTunnels.enabled }}
       initContainers:
       - name: create-argo-tunnel
@@ -73,6 +75,11 @@ spec:
         - tunnel
         - '--no-autoupdate'
         - run
+        {{- if .Values.useExistingTunnels.enabled }}
+        - {{ .Values.useExistingTunnels.tunnel }}
+        {{- else }}
+        - {{ template "cloudflared.fullname" . }}
+        {{- end }}
         securityContext:
           readOnlyRootFilesystem: true
         volumeMounts:
