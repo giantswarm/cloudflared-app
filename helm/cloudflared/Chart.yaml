@@ -3,7 +3,7 @@ appVersion: 2021.6.0
 description: Create Argo Tunnels and configure ingress routes
 engine: gotpl
 home: https://github.com/giantswarm/cloudflared-app
-icon: https://raw.githubusercontent.com/giantswarm/cloudflared-app/main/cloudflare.png
+icon: https://s.giantswarm.io/app-icons/cloudflare/1/light.svg
 name: cloudflared
 sources:
   - https://github.com/giantswarm/cloudflared-app
