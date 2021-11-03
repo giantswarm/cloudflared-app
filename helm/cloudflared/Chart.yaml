@@ -8,3 +8,5 @@ name: cloudflared
 sources:
   - https://github.com/giantswarm/cloudflared-app
 version: 0.2.0
+annotations:
+  application.giantswarm.io/team: team-cabbage
