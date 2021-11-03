@@ -9,4 +9,4 @@ sources:
   - https://github.com/giantswarm/cloudflared-app
 version: 0.2.0
 annotations:
-  app.giantswarm.io/team: team-cabbage
+  application.giantswarm.io/team: team-cabbage
