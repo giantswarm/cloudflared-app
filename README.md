@@ -76,7 +76,7 @@ connection and then deletes the tunnel.
 Create Cloudflared Tunnel(s) from an existing device (It is recommended to at least create two tunnels for resilience). Once the tunnels are created,
 the credentials JSON file(s) can be found in `~/.cloudflared/`. These need to be saved in a Kubernetes secret:
 ```
-kubectl create secret -n clouflared-namespace cloudflared-credentials --from-file=~/.cloudflared/<TUNNEL_ID-1>.json --from-file=~/.cloudflared/<TUNNEL_ID-2>.json --from-file=...
+kubectl create secret generic -n clouflared-namespace cloudflared-credentials --from-file=~/.cloudflared/<TUNNEL_ID-1>.json --from-file=~/.cloudflared/<TUNNEL_ID-2>.json --from-file=...
 ```
 
 Then it is required to set `useExistingTunnels.enabled` to true and complete the keys within `useExistingTunnels` (An example is presented below).
