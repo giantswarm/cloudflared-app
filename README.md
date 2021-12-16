@@ -1,12 +1,12 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/cloudflared-app.svg?style=shield)](https://circleci.com/gh/giantswarm/cloudflared-app)
 
-# cloudflared chart
+# Cloudflared chart
 
-Giant Swarm offers a cloudflared App which can be installed in workload clusters.
-Here we define the cloudflared chart with its templates and default configuration.
+Giant Swarm offers a Cloudflared App which can be installed in workload clusters.
+Here we define the Cloudflared chart with its templates and default configuration.
 
 ## What is this app?
-This app allows you to launch [Cloudflare Argo Tunnels](https://www.cloudflare.com/en-gb/products/argo-tunnel/)
+This app allows you to launch [Cloudflare Tunnels](https://www.cloudflare.com/en-gb/products/tunnel/)
 and then route directly to services inside of your cluster. This approach
 bypasses any external ingress paths and can also be configured to bypass
 Kubernetes Ingress
@@ -35,22 +35,23 @@ There are 3 ways to install this app onto a workload cluster.
 ## Configuring
 This app can be used in 2 ways:
 
-- Either using existing tunnels and supplying credentials file(s) - This is the recommended Cloudflare way of running Argo Tunnels
-- Use the App to create and mange the Argo tunnels for you
+- Either using existing tunnels and supplying credentials file(s) - This is the recommended Cloudflare way of running Cloudflared Tunnels
+- Use the App to create and manage the tunnels for you
 
 
-### App Managed Argo Tunnels
+### App Managed Cloudflared Tunnels
 In order to use this you will need to ensure you have the following:
 
 - Email address to login to Cloudflare API
 - Cloudflare Account ID
 
 ![Cloudflare Account ID](https://raw.githubusercontent.com/giantswarm/cloudflared-app/main/accountid.png)
-- Cloudflare API token with `Account:Argo Tunnel:Edit` capability
+- Cloudflare API token with `Account:MyAccount Tunnel:Edit` capability
 
 ![Cloudflare API Token](https://raw.githubusercontent.com/giantswarm/cloudflared-app/main/apitoken.png)
 
 #### Optional
+
 The Tunnel requires a secret to launch, if one is not supplied the App can
 create one for you. But as this secret is essential for launching the tunnel it
 must be saved securely to ensure that you can launch the tunnel elsewhere if
@@ -59,24 +60,20 @@ needed.
 You can supply your own secret:
 
 ```bash
- uuidgen | base64 | kubectl create secret -n my-argo-tunnel generic my-tunnel-secret --from-file=tunnelSecret=/dev/stdin
+ uuidgen | base64 | kubectl create secret -n my-tunnel generic my-tunnel-secret --from-file=/dev/stdin
 ```
 
-The tunnel secret needs to be 32 bytes or more and needs to be stored base64
-encoded.
+The tunnel secret needs to be 32 bytes or more and needs to be stored base64 encoded. You can later supply the Kubernetes secret name.
 
-You can later supply the Kubernetes secret name.
-
-####⚠️ *WARNING*
-When using Argo tunnel managed by the app, the tunnel will be deleted upon
-removal of the app. A pre delete hook will be executed that cleans the tunnel
-connection and then deletes the tunnel.
+####⚠️ *WARNING* When using Cloudflared tunnels managed by the app, the tunnel will be deleted upon
+removal of the app. A pre delete hook will be executed that cleans the tunnel connection and then deletes the tunnel.
 
 ### Use existing Tunnels
-Create Argo Tunnel(s) from an existing device (It is recommended to at least create two tunnels for resilience). Once the tunnels are created,
-the credentials JSON file(s) can be found in `~/.cloudflared/`. These need to be saved in a Kubernetes secret:
-```
-kubectl create secret -n clouflared-namespace cloudflared-credentials --from-file=~/.cloudflared/<TUNNEL_ID-1>.json --from-file=~/.cloudflared/<TUNNEL_ID-2>.json --from-file=...
+
+Create Cloudflared Tunnel(s) from an existing device (It is recommended to at least create two tunnels for resilience). Once the tunnels are created, the credentials JSON file(s) can be found in `~/.cloudflared/`. These need to be saved in a Kubernetes secret:
+
+```bash
+kubectl create secret generic -n cloudflared-namespace cloudflared-credentials --from-file=credentials.json=~/.cloudflared/<TUNNEL_ID-1>.json
 ```
 
 Then it is required to set `useExistingTunnels.enabled` to true and complete the keys within `useExistingTunnels` (An example is presented below).
@@ -99,7 +96,7 @@ Then it is required to set `useExistingTunnels.enabled` to true and complete the
 |`accountId`                  | Account ID (see above, required)            | `""` |
 |`apiKey`                     | API key used for the API (see above, required or `apiKeySecretName` needs to be set) | `""` |
 |`apiKeySecretName`           | Name of existing secret that containers the API Key, the API key needs to be stored in a key in the secret called `apiKey` (required or `apiKey` needs to be set) | `""` |
-|`tunnelSecretBase64`         | Base64 encoded Tunnel Secret (see above, required or `tunnelSecretName` needs to be set | `""` |
+|`tunnelSecretBase64`         | Base64 encoded Tunnel Secret (see below, required or `tunnelSecretName` needs to be set | `""` |
 |`tunnelSecretName`           | Name of existing secret container Tunnel Secret, the tunnel secret needs to be stored in a key in the secret called `tunnelSecret` (required or `tunnelSecretBase64` needs to be set) | `""` |
 |`config`                     | Config file used for cloudflared. See [online documentation](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/configuration/config) | see `values.yaml` |
 |`useExistingTunnels.enabled` | Whether to use an existing Tunnel           | `false` |
@@ -134,9 +131,7 @@ config:
 useExistingTunnels:
   enabled: true
   credentialsSecretName: my-tunnel-credentials
-  tunnelIDs:
-    - "f8c06a8a-1880-4e6e-8502-deb8f1d1253b"
-    - "a6392a8a-4dfa-4df6-8eff-e370097f0726"
+  tunnel: "f8c06a8a-1880-4e6e-8502-deb8f1d1253b"
 
 config:
   no-tls-verify: false
