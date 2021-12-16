@@ -14,7 +14,7 @@ This PR:
 
 ### Testing
 
-Description on how {APP-NAME} can be tested.
+Description on how Cloudflared Tunnel can be tested.
 
 - [ ] fresh install works
   - [ ] AWS
