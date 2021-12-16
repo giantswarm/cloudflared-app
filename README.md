@@ -35,11 +35,30 @@ There are 3 ways to install this app onto a workload cluster.
 ## Configuring
 This app can be used in 2 ways:
 
-- Either using existing tunnels and supplying credentials file(s) - This is the recommended Cloudflare way of running Cloudflared Tunnels
-- Use the App to create and manage the tunnels for you
 
+1) Use existing tunnels -> This is the recommended Cloudflare way of running Cloudflared Tunnels
+2) App Managed -> The App manages to create and delete the tunnels for you
 
-### App Managed Cloudflared Tunnels
+### 1) Use existing Tunnels
+
+Create Cloudflared Tunnel(s) from an existing device (It is recommended to at least create two tunnels for resilience). You can run `cloudflared` command:
+
+```bash
+$ cloudflared tunnel create <NAME>
+```
+It creates the tunnel and generates the credentials file in the default cloudflared directory. Also, it creates a subdomain of .cfargotunnel.com.
+
+__Note__: You can map your (sub)domain now to the tunnel one `<TUNNEL_ID>.cfargotunnel.com.`. More info in the [official guide](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install-and-setup/tunnel-guide).
+
+Once the tunnels are created, the credentials JSON file(s) can be found in `~/.cloudflared/`. These need to be saved in a Kubernetes secret:
+
+```bash
+kubectl create secret generic -n cloudflared-namespace cloudflared-credentials --from-file=credentials.json=~/.cloudflared/<TUNNEL_ID-1>.json
+```
+
+At the same time, it is required to set `useExistingTunnels.enabled` to true and complete the keys within `useExistingTunnels` (An example is presented [below](#use-existing-tunnels)).
+
+### 2) App Managed Cloudflared Tunnels
 In order to use this you will need to ensure you have the following:
 
 - Email address to login to Cloudflare API
@@ -68,17 +87,8 @@ The tunnel secret needs to be 32 bytes or more and needs to be stored base64 enc
 ####⚠️ *WARNING* When using Cloudflared tunnels managed by the app, the tunnel will be deleted upon
 removal of the app. A pre delete hook will be executed that cleans the tunnel connection and then deletes the tunnel.
 
-### Use existing Tunnels
+### Values configuration (values.yaml)
 
-Create Cloudflared Tunnel(s) from an existing device (It is recommended to at least create two tunnels for resilience). Once the tunnels are created, the credentials JSON file(s) can be found in `~/.cloudflared/`. These need to be saved in a Kubernetes secret:
-
-```bash
-kubectl create secret generic -n cloudflared-namespace cloudflared-credentials --from-file=credentials.json=~/.cloudflared/<TUNNEL_ID-1>.json
-```
-
-Then it is required to set `useExistingTunnels.enabled` to true and complete the keys within `useExistingTunnels` (An example is presented below).
-
-### values.yaml
 |Value                        |Description|Default|
 |-----------------------------|-----------|-------|
 |`namespace`                  | Namespace in which to launch the App        | `kube-system` |
