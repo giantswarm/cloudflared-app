@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added new Cloudflared version
 - Improve the Readme explanation
+- Add `application.giantswarm.io/team` to common labels ([#17](https://github.com/giantswarm/cloudflared-app/pull/17))
 
 ## [0.2.2] - 2021-11-03
 
