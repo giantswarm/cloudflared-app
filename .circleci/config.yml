@@ -18,3 +18,13 @@ workflows:
             tags:
               only: /^v.*/
           push_to_oci_registry: true
+
+      - architect/run-tests-with-ats:
+          name: execute chart tests
+          filters:
+            # Do not trigger the job on merge to master.
+            branches:
+              ignore:
+                - master
+          requires:
+            - "package and push cloudflared chart"
