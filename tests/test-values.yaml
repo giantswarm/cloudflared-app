@@ -1,0 +1,3 @@
+provider: inmemory
+image:
+  registry: quay.io
