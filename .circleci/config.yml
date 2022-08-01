@@ -25,6 +25,6 @@ workflows:
             # Do not trigger the job on merge to master.
             branches:
               ignore:
-                - master
+                - main
           requires:
             - "package and push cloudflared chart"
