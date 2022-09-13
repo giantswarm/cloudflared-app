@@ -100,7 +100,7 @@ removal of the app. A pre delete hook will be executed that cleans the tunnel co
 |`initImage.pullPolicy`       | Init container image Pull Policy            | `IfNotPresent` |
 |`image.registry`             | Registry used for cloudflared               | `quay.io` |
 |`image.name`                 | Image name for cloudflared                  | `giantswarm/cloudflared` |
-|`image.tag`                  | Tag used for cloudflared image              | `2021.5.6` |
+|`image.tag`                  | Tag used for cloudflared image              | `2022.8.4-amd64` |
 |`image.pullPolicy`           | Pull policy for cloudflared image           | `IfNotPresent` |
 |`accountEmail`               | Account Email to use for the API (required) | `""` |
 |`accountId`                  | Account ID (see above, required)            | `""` |
