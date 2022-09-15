@@ -10,7 +10,7 @@ icon: https://s.giantswarm.io/app-icons/cloudflare/1/light.svg
 name: cloudflared
 sources:
   - https://github.com/giantswarm/cloudflared-app
-version: 0.2.0
+version: 0.4.0
 kubeVersion: ">=1.18"
 annotations:
   application.giantswarm.io/team: team-cabbage
