@@ -62,7 +62,7 @@ spec:
             mountPath: "/etc/cloudflared"
       {{- end }}
       containers:
-      - image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
+      - image: cloudflare/cloudflared:2022.8.4-amd64
         name: cloudflared
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
@@ -76,7 +76,8 @@ spec:
         args:
         - tunnel
         - '--no-autoupdate'
-        {{- if .Values.useQuickTunnel }}
+
+        {{- if not .Values.useQuickTunnel }}
         - run
         {{- if .Values.useExistingTunnels.enabled }}
         - {{ .Values.useExistingTunnels.tunnel }}
