@@ -1,4 +1,4 @@
-{{- define "create-argo-tunnel-command" -}}
+{{- define "create-tunnel-command" -}}
 command: 
   - sh
   - -c

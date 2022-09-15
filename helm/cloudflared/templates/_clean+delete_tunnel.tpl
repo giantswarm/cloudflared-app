@@ -1,4 +1,4 @@
-{{- define "clean+delete-argo-tunnel-command" -}}
+{{- define "clean+delete-tunnel-command" -}}
 command:
   - sh
   - -c

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Upgrade app to version `2022.8.4`
+- Remove "argo" references from template names
 
 ## [0.3.0] - 2021-12-16
 
