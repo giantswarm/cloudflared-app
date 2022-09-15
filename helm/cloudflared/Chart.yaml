@@ -1,6 +1,6 @@
 apiVersion: v2
-appVersion: 2021.11.0
-description: Create Argo Tunnels and configure ingress routes
+appVersion: 2022.8.4
+description: Create Cloudflared Tunnels and configure ingress routes
 keywords:
   - vpn
   - tunnel
