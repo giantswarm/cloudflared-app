@@ -62,7 +62,7 @@ spec:
             mountPath: "/etc/cloudflared"
       {{- end }}
       containers:
-      - image: cloudflare/cloudflared:2022.8.4-amd64
+      - image: {{ .Values.image.registry }}/{{ .Values.image.name }}:{{ .Values.image.tag }}
         name: cloudflared
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         resources:
