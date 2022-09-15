@@ -35,7 +35,6 @@ There are 3 ways to install this app onto a workload cluster.
 ## Configuring
 This app can be used in 2 ways:
 
-
 1) Use existing tunnels -> This is the recommended Cloudflare way of running Cloudflared Tunnels
 2) App Managed -> The App manages to create and delete the tunnels for you
 
@@ -151,6 +150,21 @@ config:
     - hostname: echo.xxxxxxxxxx.com
       service: http://echo-echo-server.default.svc.cluster.local
     - service: http_status:404
+```
+
+## Testing
+
+Cloudflare offers the possibility of setting [Quick Tunnels](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/do-more-with-tunnels/trycloudflare/) up for testing purposes. 
+Quick Tunnels do not require registration or credentials and they offer a random URL under the `trycloudflare.com` domain. The URL is provided by the cloudflared application in its logs.
+
+### Quick Tunnel example
+
+```
+useQuickTunnel: true
+
+config:
+  ingress:
+    - service: http://echo-echo-server.default.svc.cluster.local
 ```
 
 ## Compatibility
