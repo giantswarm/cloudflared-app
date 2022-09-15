@@ -41,7 +41,7 @@ spec:
         runAsGroup: 65534
       {{- if and (not .Values.useExistingTunnels.enabled) (not .Values.useQuickTunnel)}}
       initContainers:
-      - name: create-argo-tunnel
+      - name: create-tunnel
         image: {{ .Values.initImage.registry }}/{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}
         imagePullPolicy: {{ .Values.initImage.pullPolicy }}
         resources:
@@ -51,7 +51,7 @@ spec:
           limits:
             memory: "100Mi"
             cpu: "100m"
-        {{- include "create-argo-tunnel-command" . | nindent 8 }}
+        {{- include "create-tunnel-command" . | nindent 8 }}
         env:
           {{- include "create_tunnel.envs" . | nindent 10 }}
           {{- include "envs" . | nindent 10 }}
