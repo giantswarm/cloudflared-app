@@ -1,3 +1,5 @@
-provider: inmemory
-image:
-  registry: quay.io
+useQuickTunnel: true
+
+config:
+  ingress:
+    - service: http://podinfo:9898
