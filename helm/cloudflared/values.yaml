@@ -27,6 +27,8 @@ useExistingTunnels:
   credentialsSecretName: ""
   tunnel: ""
 
+useQuickTunnel: false
+
 config:
   no-tls-verify: false
   loglevel: "info"

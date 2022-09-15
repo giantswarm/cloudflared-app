@@ -39,7 +39,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 65532
         runAsGroup: 65534
-      {{- if not .Values.useExistingTunnels.enabled }}
+      {{- if and (not .Values.useExistingTunnels.enabled) (not .Values.useQuickTunnel)}}
       initContainers:
       - name: create-argo-tunnel
         image: {{ .Values.initImage.registry }}/{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}
@@ -70,15 +70,20 @@ spec:
         env:
           - name: TUNNEL_METRICS
             value: "0.0.0.0:42617"
+        {{- if not .Values.useQuickTunnel}}
           {{- include "envs" . | nindent 10 }}
+        {{- end }}
         args:
         - tunnel
         - '--no-autoupdate'
+
+        {{- if not .Values.useQuickTunnel }}
         - run
         {{- if .Values.useExistingTunnels.enabled }}
         - {{ .Values.useExistingTunnels.tunnel }}
         {{- else }}
         - {{ template "cloudflared.fullname" . }}
+        {{- end }}
         {{- end }}
         securityContext:
           readOnlyRootFilesystem: true
