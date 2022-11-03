@@ -201,7 +201,7 @@ Not following these limitations will most likely result in a broken deployment.
 ## Contributing & Reporting Bugs
 If you have suggestions for how `cloudflared` could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
-Check out the [Contributing Guide](https://github.com/cloudflare/cloudflared/blob/master/CONTRIBUTING.md) for details on the contribution workflow, submitting patches, and reporting bugs.
+Check out the [Contributing Guide](https://github.com/giantswarm/cloudflared-app/blob/main/CONTRIBUTING.md) for details on the contribution workflow, submitting patches, and reporting bugs.
 
 ## Credit
 
