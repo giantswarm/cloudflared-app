@@ -21,6 +21,17 @@ traffic from a public interface (Cloudflare) to private services running in Kube
 ## Who can use it?
 Anyone that has a Cloudflare account can use this App.
 
+---
+
+## Index
+- [Installing](#installing)
+- [Configuring](#configuring)
+- [Testing](#testing)
+- [Compatibility](#compatibility)
+- [Limitations](#limitations)
+- [Release Process](#release-process)
+- [Contributing & Reporting Bugs](#contributing--reporting-bugs)
+- [Credit](#credit)
 
 ## Installing
 
@@ -171,17 +182,24 @@ config:
 
 This app has been tested to work with the following workload cluster release versions:
 
-*
+* KVM `v16.2.0`
 
 ## Limitations
 
 Some apps have restrictions on how they can be deployed.
 Not following these limitations will most likely result in a broken deployment.
 
-*
+## Release Process
+
+* Ensure CHANGELOG.md is up to date.
+* Create a new branch to trigger the release workflow e.g. to release `v0.1.0`,
+  create a branch from master called `main#release#v0.1.0` and push it.
+* This will push a new git tag and trigger a new tarball to be pushed to the
+  `default-catalog` and the `giantswarm-catalog`
+
 
 ## Contributing & Reporting Bugs
-If you have suggestions for how `external-dns` could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+If you have suggestions for how `cloudflared` could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
 Check out the [Contributing Guide](CONTRIBUTING.md) for details on the contribution workflow, submitting patches, and reporting bugs.
 
