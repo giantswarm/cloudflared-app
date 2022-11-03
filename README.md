@@ -193,7 +193,7 @@ Not following these limitations will most likely result in a broken deployment.
 
 * Ensure CHANGELOG.md is up to date.
 * Create a new branch to trigger the release workflow e.g. to release `v0.1.0`,
-  create a branch from master called `main#release#v0.1.0` and push it.
+  create a branch from main called `main#release#v0.1.0` and push it.
 * This will push a new git tag and trigger a new tarball to be pushed to the
   `default-catalog` and the `giantswarm-catalog`
 
