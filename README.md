@@ -9,7 +9,7 @@ Here we define the Cloudflared chart with its templates and default configuratio
 This app allows you to launch [Cloudflare Tunnels](https://www.cloudflare.com/en-gb/products/tunnel/)
 and then route directly to services inside of your cluster. This approach
 bypasses any external ingress paths and can also be configured to bypass
-Kubernetes Ingress
+Kubernetes Ingress.
 
 ## Why did we add it?
 This approach makes it a lot easier for customers who might be constrained in
@@ -179,6 +179,11 @@ Some apps have restrictions on how they can be deployed.
 Not following these limitations will most likely result in a broken deployment.
 
 *
+
+## Contributing & Reporting Bugs
+If you have suggestions for how `external-dns` could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
+
+Check out the [Contributing Guide](CONTRIBUTING.md) for details on the contribution workflow, submitting patches, and reporting bugs.
 
 ## Credit
 
