@@ -55,6 +55,8 @@ spec:
         env:
           {{- include "create_tunnel.envs" . | nindent 10 }}
           {{- include "envs" . | nindent 10 }}
+        securityContext:
+          readOnlyRootFilesystem: true
         volumeMounts:
           - name: credentials
             mountPath: "/credentials"
