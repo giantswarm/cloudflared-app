@@ -36,6 +36,7 @@ spec:
             topologyKey: "kubernetes.io/hostname"
       serviceAccountName: {{ template "cloudflared.serviceAccountName" . }}
       securityContext:
+        readOnlyRootFilesystem: true
         runAsNonRoot: true
         runAsUser: 65532
         runAsGroup: 65534
