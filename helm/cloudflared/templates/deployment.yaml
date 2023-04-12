@@ -4,6 +4,10 @@ kind: Deployment
 metadata:
   labels:
     {{- include "cloudflared.labels" . | nindent 4 }}
+  {{- with .Values.deployment.annotations }}
+  annotations:
+    {{- . | toYaml | nindent 4 }}
+  {{- end }}
   name: {{ template "cloudflared.fullname" . }}
 spec:
   replicas: {{ .Values.replicas }}

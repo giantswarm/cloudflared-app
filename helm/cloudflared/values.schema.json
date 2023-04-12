@@ -28,6 +28,14 @@
                 }
             }
         },
+        "deployment": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object"
+                }
+            }
+        },
         "image": {
             "type": "object",
             "properties": {
