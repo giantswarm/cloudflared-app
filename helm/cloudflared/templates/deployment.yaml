@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   labels:
     {{- include "cloudflared.labels" . | nindent 4 }}
-  {{- with .Values.annotations }}
+  {{- with .Values.deployment.annotations }}
   annotations:
     {{- . | toYaml | nindent 4 }}
   {{- end }}

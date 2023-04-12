@@ -8,12 +8,6 @@
         "accountId": {
             "type": "string"
         },
-        "annotations": {
-            "type": "object",
-            "additionalProperties": {
-                "type": "string"
-            }
-        },
         "apiKey": {
             "type": "string"
         },
@@ -31,6 +25,14 @@
                 },
                 "transport-loglevel": {
                     "type": "string"
+                }
+            }
+        },
+        "deployment": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object"
                 }
             }
         },
