@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Ability to specify annotations of the Deployment
 
+### Changed
+
+- Do not install PodSecurityPolicy if api not available.
+
 ## [0.4.0] - 2022-09-15
 
 ### Added
