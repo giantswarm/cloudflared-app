@@ -18,13 +18,21 @@ spec:
     spec:
       serviceAccountName: {{ template "cloudflared.serviceAccountName" . }}
       restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
       - name: clean-delete-tunnel
         image: {{ .Values.initImage.registry }}/{{ .Values.initImage.name }}:{{ .Values.initImage.tag }}
         imagePullPolicy: {{ .Values.initImage.pullPolicy }}
         securityContext:
-          runAsUser: 1000
           readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
         resources:
           requests:
             memory: "100Mi"
