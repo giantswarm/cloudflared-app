@@ -1,10 +1,12 @@
-{{- if .Capabilities.APIVersions.Has "policy/v1beta1" }}
+{{- if and .Capabilities.APIVersions.Has "policy/v1beta1" (not .Values.global.podSecurityStandards.enforced) }}
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: {{ template "cloudflared.fullname" . }}
   labels:
     {{- include "cloudflared.labels" . | nindent 4 }}
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
 spec:
   privileged: false
   fsGroup:
