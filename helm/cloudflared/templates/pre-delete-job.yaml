@@ -1,4 +1,4 @@
-{{- if not .Values.useExistingTunnels.enabled }}
+{{- if and (not .Values.useExistingTunnels.enabled) (not .Values.useQuickTunnel) }}
 ---
 apiVersion: batch/v1
 kind: Job
