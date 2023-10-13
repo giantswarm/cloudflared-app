@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Do not install PodSecurityPolicy if api not available.
 - Make deployment PSS compliant.
+- Do not install cleaning hook when Quick Tunnel is enabled.
 
 ## [0.4.0] - 2022-09-15
 
