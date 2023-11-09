@@ -11,6 +11,6 @@ name: cloudflared
 sources:
   - https://github.com/giantswarm/cloudflared-app
 version: 0.5.0
-kubeVersion: ">=1.18"
+kubeVersion: ">=1.18.0-0"
 annotations:
   application.giantswarm.io/team: team-cabbage
