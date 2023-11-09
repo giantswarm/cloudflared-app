@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1] - 2023-11-09
+
 ### Changed
 
 - Fix EKS compatibility.
@@ -94,7 +96,8 @@ Version not released
 ## v0.0.1
 Version not released
 
-[Unreleased]: https://github.com/giantswarm/cloudflared-app/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cloudflared-app/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/giantswarm/cloudflared-app/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/giantswarm/cloudflared-app/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/giantswarm/cloudflared-app/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/giantswarm/cloudflared-app/compare/v0.2.1...v0.3.0
