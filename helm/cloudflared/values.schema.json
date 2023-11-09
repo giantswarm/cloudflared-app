@@ -83,9 +83,6 @@
                 }
             }
         },
-        "namespace": {
-            "type": "string"
-        },
         "replicas": {
             "type": "integer"
         },
@@ -115,9 +112,6 @@
                     }
                 }
             }
-        },
-        "serviceType": {
-            "type": "string"
         },
         "tunnelSecretBase64": {
             "type": "string"

@@ -101,8 +101,6 @@ removal of the app. A pre delete hook will be executed that cleans the tunnel co
 
 |Value                        |Description|Default|
 |-----------------------------|-----------|-------|
-|`namespace`                  | Namespace in which to launch the App        | `kube-system` |
-|`serviceType`                | Giant Swarm service definition              | `managed` |
 |`replicas`                   | Number of replicas to use for a deployment  | `2`       |
 |`initImage.registry`         | Registry used for the init container image  | `quay.io` |
 |`initImage.name`             | Image name used for the init container      | `giantswarm/debug` |
