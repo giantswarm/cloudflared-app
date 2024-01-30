@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/cloudflared-app.svg?style=shield)](https://circleci.com/gh/giantswarm/cloudflared-app)
 
-**Deprecation Notice: Notice: cloudflared-app is scheduled for archival in June 2024, and no further development or updates will occur.**
+**Deprecation Notice: cloudflared-app is scheduled for archival in June 2024, and no further development or updates will occur.**
 
 # Cloudflared chart
 
